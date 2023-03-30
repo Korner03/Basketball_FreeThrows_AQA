@@ -1,0 +1,27 @@
+Model:
+  checkpoint_backbone: checkpoints/pretrained_skeleton.pth
+  mot_en_channels: [30, 64, 96, 128]
+  stat_en_channels: [28, 32, 48, 64]
+  de_channels: [192, 128, 64, 30]
+Data:
+  train_set_len: 465
+  val_set_len: 100
+  data_dir: bbfts_data
+  labels_file: bbfts_labels.csv
+  num_workers: 4
+  randomseed: 0
+  pose:
+    estimator: OpenPose
+    nr_joints: 15
+    meanpose_path: bbfts_data/meanpose.npy
+    stdpose_path: bbfts_data/stdpose.npy
+Hyperparams:
+  learning_rate: 0.00001
+  batch_size: 16
+  n_epochs: 170
+  loss_scale_student: 0.5
+  loss_scale_recons: 0.6
+  pre_release_n_frames: 35
+  post_release_n_frames: 10
+  do_p: 0.2
+  frozen_aug_p: 0
