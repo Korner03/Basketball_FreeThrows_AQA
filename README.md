@@ -1,6 +1,6 @@
 # Revisiting Pose Based AQA For Basketball Free Throws Prediction
 
-We provide PyTorch implementation for our paper [_Revisiting Pose Based AQA For Basketball Free Throws Prediction_](https://motionretargeting2d.github.io/), SIGGRAPH 2019.
+We provide PyTorch implementation for our paper [_Revisiting Pose Based AQA For Basketball Free Throws Prediction_](https://motionretargeting2d.github.io/).
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ We provide PyTorch implementation for our paper [_Revisiting Pose Based AQA For 
   python train.py --config configs/config.yaml
   ```
 
-  The model will be saved in ./experiments/<exp-number>/model.pth
+  The model will be saved under ./experiments/<exp-number>/model.pth
 
 - Test:
 
@@ -61,7 +61,9 @@ Credits
 This application is inspired by Open Source components. You can find the source code of their open source projects along with license information below. We acknowledge and are grateful to these developers for their contributions to open source.
 
 Project: [Learning Character-Agnostic Motion for Motion Retargeting in 2D](https://github.com/ChrisWu1997/2D-Motion-Retargeting)
+
 Copyright (c) 2019 Rundi Wu
+
 License (MIT): [LICENSE](https://github.com/ChrisWu1997/2D-Motion-Retargeting/blob/master/LICENSE)
 
 

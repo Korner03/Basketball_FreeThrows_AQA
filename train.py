@@ -134,7 +134,7 @@ def train(config, model_student,
                 correct, _, _ = eval_knn_accuracy(config=config, model_student=model_student,
                                                   val_loader_full=val_loader_full, train_loader_full=train_loader_full,
                                                   device=device)
-                log_train_step(loss, loss_student, loss_recons, example_ct, epoch, correct)
+                log_train_step(loss, loss_student, loss_recons, example_ct, epoch)
 
     if not osp.exists(config['Experiments']['runs_path']):
         os.makedirs(config['Experiments']['runs_path'])
