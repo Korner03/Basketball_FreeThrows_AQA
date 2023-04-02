@@ -7,13 +7,9 @@ class UnifiedModerator(object):
     def __init__(self, net, lr, a_student, b_recons):
         self.net = net
 
-        # self.loss_recons = nn.MSELoss()
-        self.loss_recons = nn.L1Loss() # TODO
-
+        self.loss_recons = nn.L1Loss()
         self.loss_student = nn.MSELoss()
-        # self.loss_student = nn.L1Loss() # TODO
 
-        # set optimizer
         self.optimizer = optim.Adam(self.net.parameters(), lr)
 
         self.a_student = a_student
@@ -22,7 +18,7 @@ class UnifiedModerator(object):
 
     def forward(self, data):
         motion_input = data['motion'].to(self.device)
-        static_input = data['smoothed_motion'].to(self.device)
+        static_input = data['aligned_motion'].to(self.device)
         cls_label = data['cls_labels'].to(self.device).reshape(-1)
         teacher_feat_map = data['teacher_motion_ft_map'].to(self.device)
 
@@ -30,9 +26,7 @@ class UnifiedModerator(object):
 
         losses = None
         if self.a_student != 0 and len(teacher_feat_map.shape) == 2:
-            # TODO
             loss_student = self.loss_student(motion_feat_map, teacher_feat_map) * self.a_student
-
             loss_recon = self.loss_recons(output_recons, motion_input) * self.b_recons
 
             losses = {'reconstruction': loss_recon,
@@ -56,8 +50,7 @@ class UnifiedModerator(object):
 
         return output, losses
 
-    def train_func(self, data, feat_map=None):
-        # TODO above empty param
+    def train_func(self, data):
         self.net.train()
 
         outputs, losses = self.forward(data)
@@ -66,13 +59,8 @@ class UnifiedModerator(object):
 
         return outputs, losses
 
-    def update_network(self, loss_dcit, info=None):
-        # TODO above empty param
+    def update_network(self, loss_dcit):
         loss = sum(loss_dcit.values())
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
-
-    def pre_train_load_network(self, ckpt_path):
-        state_dict = torch.load(ckpt_path)
-        self.net.load_state_dict(state_dict)

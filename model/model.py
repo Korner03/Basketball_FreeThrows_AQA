@@ -66,14 +66,14 @@ class Encoder(nn.Module):
 
 
 class UnifiedNetwork(nn.Module):
-    def __init__(self, config, mot_en_channels, stat_en_channels, de_channels,
-                 mot_kernel_size, global_pool=None, convpool=None):
+    def __init__(self, mot_en_channels, stat_en_channels, de_channels, mot_kernel_size,
+                 do_p, global_pool=None, convpool=None):
         super(UnifiedNetwork, self).__init__()
 
         self.mot_encoder = Encoder(channels=mot_en_channels, kernel_size=mot_kernel_size)
         self.static_encoder = Encoder(channels=stat_en_channels, kernel_size=7,
                                       global_pool=global_pool, convpool=convpool)
-        self.decoder = Decoder(channels=de_channels, dropout_p=config.do_p)
+        self.decoder = Decoder(channels=de_channels, dropout_p=do_p)
 
     def forward(self, x_motion, x_static):
         mot_feat_map = self.mot_encoder(x_motion)
@@ -90,12 +90,16 @@ class UnifiedNetwork(nn.Module):
 
 
 def create_teacher_unified_net(config):
-    return UnifiedNetwork(config=config, mot_en_channels=config.mot_en_channels,
-                          stat_en_channels=config.stat_en_channels, de_channels=config.de_channels,
-                          mot_kernel_size=8, global_pool=F.max_pool1d, convpool=nn.MaxPool1d)
+    return UnifiedNetwork(mot_en_channels=config['Model']['mot_en_channels'],
+                          stat_en_channels=config['Model']['stat_en_channels'],
+                          de_channels=config['Model']['de_channels'],
+                          mot_kernel_size=8, do_p=config['Hyperparams']['do_p'],
+                          global_pool=F.max_pool1d, convpool=nn.MaxPool1d)
 
 
 def create_student_unified_net(config):
-    return UnifiedNetwork(config=config, mot_en_channels=config.mot_en_channels,
-                          stat_en_channels=config.stat_en_channels, de_channels=config.de_channels,
-                          mot_kernel_size=3, global_pool=F.max_pool1d, convpool=nn.MaxPool1d)
+    return UnifiedNetwork(mot_en_channels=config['Model']['mot_en_channels'],
+                          stat_en_channels=config['Model']['stat_en_channels'],
+                          de_channels=config['Model']['de_channels'],
+                          mot_kernel_size=3, do_p=config['Hyperparams']['do_p'],
+                          global_pool=F.max_pool1d, convpool=nn.MaxPool1d)

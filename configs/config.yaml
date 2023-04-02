@@ -8,13 +8,12 @@ Data:
   val_set_len: 100
   data_dir: bbfts_data
   labels_file: bbfts_labels.csv
-  num_workers: 4
-  randomseed: 0
+  num_workers: 0
+  meanpose_path: meanpose.npy
+  stdpose_path: stdpose.npy
   pose:
     estimator: OpenPose
     nr_joints: 15
-    meanpose_path: bbfts_data/meanpose.npy
-    stdpose_path: bbfts_data/stdpose.npy
 Hyperparams:
   learning_rate: 0.00001
   batch_size: 16
@@ -22,6 +21,10 @@ Hyperparams:
   loss_scale_student: 0.5
   loss_scale_recons: 0.6
   pre_release_n_frames: 35
-  post_release_n_frames: 10
+  post_release_n_frames: 13
   do_p: 0.2
   frozen_aug_p: 0
+  knn_k: 5
+  randomseed: 0
+Experiments:
+  runs_path: experiments
