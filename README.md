@@ -1,6 +1,6 @@
 # Revisiting Pose Based AQA For Basketball Free Throws Prediction
 
-We provide PyTorch implementation for our paper [_Revisiting Pose Based AQA For Basketball Free Throws Prediction_](https://motionretargeting2d.github.io/).
+We provide PyTorch implementation for our paper [_Revisiting Pose Based AQA For Basketball Free Throws Prediction_](https://github.com/Korner03/Basketball_FreeThrows_AQA).
 
 ## Prerequisites
 
